@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Eliminar Cliente{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-3 text-danger">
+        <i class="bi bi-exclamation-triangle"></i> Eliminar Cliente
+    </h2>
+
+    <p>¿Estás seguro de que quieres eliminar al cliente:</p>
+    <h4>{{ cliente.nombre }}</h4>
+    <p><strong>Email:</strong> {{ cliente.email }}</p>
+    <p><strong>Saldo pendiente:</strong> $ {{ cliente.saldo }}</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">
+            <i class="bi bi-trash"></i> Sí, eliminar
+        </button>
+        <a href="{% url 'supermercado:clientes_list' %}" class="btn btn-secondary">
+            <i class="bi bi-x-lg"></i> Cancelar
+        </a>
+    </form>
+</div>
+{% endblock %}

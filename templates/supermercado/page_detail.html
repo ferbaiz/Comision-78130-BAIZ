@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page.titulo }}{% endblock %}
+
+{% block content %}
+<h1>{{ page.titulo }}</h1>
+
+{% if page.imagen %}
+<img src="{{ page.imagen.url }}" width="400">
+{% endif %}
+
+<div>
+    {{ page.contenido|safe }}
+</div>
+
+<p><strong>Fecha:</strong> {{ page.publicado }}</p>
+
+{% if user.is_authenticated %}
+    <a href="{% url 'supermercado:page_update' page.id %}">Editar</a> |
+    <a href="{% url 'supermercado:page_delete' page.id %}">Eliminar</a>
+{% endif %}
+
+{% endblock %}

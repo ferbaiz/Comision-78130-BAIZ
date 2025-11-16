@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Detalle proveedor{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">{{ proveedor.nombre }}</h2>
+
+<ul class="list-group mb-3">
+  <li class="list-group-item"><strong>Contacto:</strong> {{ proveedor.contacto }}</li>
+  <li class="list-group-item"><strong>Teléfono:</strong> {{ proveedor.telefono }}</li>
+  <li class="list-group-item"><strong>Email:</strong> {{ proveedor.email }}</li>
+</ul>
+
+<a href="{% url 'supermercado:proveedores_list' %}" class="btn btn-secondary">Volver</a>
+<a href="{% url 'supermercado:proveedor_update' proveedor.pk %}" class="btn btn-warning">Editar</a>
+<a href="{% url 'supermercado:proveedor_delete' proveedor.pk %}" class="btn btn-danger">Eliminar</a>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Productos{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Productos disponibles</h2>
+
+    <a href="{% url 'supermercado:producto_create' %}" class="btn btn-primary">
+        <i class="bi bi-plus-circle"></i> Nuevo producto
+    </a>
+</div>
+
+{% if productos %}
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for producto in productos %}
+    <div class="col">
+        <div class="card h-100 shadow-sm">
+
+            {% if producto.imagen %}
+            <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}">
+            {% else %}
+            <img src="{% static 'img/no-image.jpg' %}" class="card-img-top" alt="Sin imagen">
+            {% endif %}
+
+            <div class="card-body">
+                <h5 class="card-title">{{ producto.nombre }}</h5>
+
+                {% if producto.categoria %}
+                    <span class="badge text-bg-secondary mb-2">
+                        {{ producto.categoria.get_nombre_display }}
+                    </span>
+                {% endif %}
+
+                <p class="card-text">
+                    {{ producto.descripcion|default:"Sin descripción."|truncatewords:15 }}
+                </p>
+
+                <p class="mb-0">
+                    <strong>${{ producto.precio }}</strong>
+                </p>
+            </div>
+
+            <div class="card-footer d-flex gap-2">
+                <a href="{% url 'supermercado:producto_detail' producto.pk %}"
+                   class="btn btn-sm btn-outline-primary w-100">
+                    Ver detalles
+                </a>
+                <a href="{% url 'supermercado:producto_update' producto.pk %}"
+                   class="btn btn-sm btn-warning">
+                    <i class="bi bi-pencil"></i>
+                </a>
+                <a href="{% url 'supermercado:producto_delete' producto.pk %}"
+                   class="btn btn-sm btn-danger">
+                    <i class="bi bi-trash"></i>
+                </a>
+            </div>
+
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% else %}
+<div class="alert alert-warning">No hay productos cargados.</div>
+{% endif %}
+
+{% endblock %}

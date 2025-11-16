@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Detalle Cliente{% endblock %}
+{% block content %}
+<h2>Cliente: {{ cliente.nombre }}</h2>
+
+<p><strong>Email:</strong> {{ cliente.email }}</p>
+<p><strong>Saldo:</strong> ${{ cliente.saldo }}</p>
+
+<a href="{% url 'supermercado:cliente_update' cliente.pk %}" class="btn btn-warning">Editar</a>
+<a href="{% url 'supermercado:cliente_delete' cliente.pk %}" class="btn btn-danger">Eliminar</a>
+<a href="{% url 'supermercado:clientes_list' %}" class="btn btn-secondary">Volver</a>
+{% endblock %}

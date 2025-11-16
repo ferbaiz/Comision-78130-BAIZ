@@ -1,6 +1,6 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
-*.py[codz]
+*.py[cod]
 *$py.class
 
 # C extensions
@@ -207,3 +207,26 @@ marimo/_lsp/
 __marimo__/
 
 entorno_virtual
+
+# ============================================
+#   Reglas personalizadas del proyecto Django
+# ============================================
+
+# Caché de Python
+__pycache__/
+*.pyc
+
+# Base de datos local
+db.sqlite3
+db.sqlite3-journal
+
+# Archivos subidos por usuario
+media/
+
+# Archivos estáticos recolectados (collectstatic)
+staticfiles/
+
+# Entorno virtual
+venv/
+entorno_virtual/
+.env

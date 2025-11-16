@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Cliente - Formulario{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">
+        {% if cliente %}
+            Editar Cliente: {{ cliente.nombre }}
+        {% else %}
+            <i class="bi bi-person-plus"></i> Nuevo Cliente
+        {% endif %}
+    </h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit" class="btn btn-primary">
+            <i class="bi bi-check-circle"></i> Guardar
+        </button>
+        <a href="{% url 'supermercado:clientes_list' %}" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> Cancelar
+        </a>
+    </form>
+</div>
+{% endblock %}

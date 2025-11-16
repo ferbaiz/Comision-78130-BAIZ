@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}{{ proveedor|default_if_none:"Crear proveedor" }}{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">
+  {% if proveedor %}Editar proveedor{% else %}Nuevo proveedor{% endif %}
+</h2>
+
+<form method="post">
+  {% csrf_token %}
+  <div class="mb-3">{{ form.nombre.label_tag }} {{ form.nombre }}</div>
+  <div class="mb-3">{{ form.contacto.label_tag }} {{ form.contacto }}</div>
+  <div class="mb-3">{{ form.telefono.label_tag }} {{ form.telefono }}</div>
+  <div class="mb-3">{{ form.email.label_tag }} {{ form.email }}</div>
+
+  <button type="submit" class="btn btn-success">Guardar</button>
+  <a href="{% url 'supermercado:proveedores_list' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

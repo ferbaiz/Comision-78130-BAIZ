@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}Editar Perfil{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-md-10">
+
+            <!-- CARD -->
+            <div class="card shadow border-0 rounded-4">
+                <div class="card-body p-4">
+
+                    <div class="text-center mb-4">
+                        <i class="bi bi-person-circle" style="font-size: 70px; color: #0d6efd;"></i>
+                        <h3 class="mt-3">Editar Perfil</h3>
+                        <p class="text-muted">Actualizá tu información personal</p>
+                    </div>
+
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <!-- DATOS PERSONALES -->
+                        <h5 class="text-primary mb-3">
+                            <i class="bi bi-person-lines-fill"></i> Datos personales
+                        </h5>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Nombre</label>
+                                {{ form.first_name }}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Apellido</label>
+                                {{ form.last_name }}
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Email</label>
+                            {{ form.email }}
+                        </div>
+
+                        <hr class="my-4">
+
+                        <!-- SEGURIDAD -->
+                        <h5 class="text-primary mb-3">
+                            <i class="bi bi-shield-lock-fill"></i> Seguridad
+                        </h5>
+
+                        <div class="mb-3">
+                            <label class="form-label">Nueva contraseña</label>
+                            {{ form.password1 }}
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Repetir nueva contraseña</label>
+                            {{ form.password2 }}
+                        </div>
+
+                        <!-- BOTONES -->
+                        <div class="d-flex justify-content-between mt-4">
+
+                            <a href="{% url 'accounts:profile' %}" 
+                               class="btn btn-outline-secondary px-4">
+                                <i class="bi bi-arrow-left"></i> Cancelar
+                            </a>
+
+                            <button type="submit" class="btn btn-primary px-4">
+                                <i class="bi bi-check-circle"></i> Guardar cambios
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+{% endblock %}
