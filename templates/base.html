@@ -91,9 +91,12 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link text-warning" href="{% url 'accounts:logout' %}">
-                        <i class="bi bi-box-arrow-right"></i> Logout
-                    </a>
+                    <form action="{% url 'accounts:logout' %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button class="nav-link text-warning border-0 bg-transparent" type="submit">
+                            <i class="bi bi-box-arrow-right"></i> Logout
+                        </button>
+                    </form>
                 </li>
 
                 {% else %}
