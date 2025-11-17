@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Mensajes{% endblock %}
+
+{% block content %}
+<h2>📬 Bandeja de entrada</h2>
+
+<a class="btn btn-primary mb-3" href="{% url 'mensajes:nuevo' %}">
+    ✉ Nuevo mensaje
+</a>
+
+{% if mensajes %}
+<table class="table table-striped shadow-sm">
+<thead>
+<tr>
+    <th>Asunto</th>
+    <th>De</th>
+    <th>Fecha</th>
+    <th></th>
+</tr>
+</thead>
+<tbody>
+{% for msg in mensajes %}
+<tr class="{% if not msg.leido %}table-warning{% endif %}">
+    <td>{{ msg.asunto }}</td>
+    <td>{{ msg.emisor.username }}</td>
+    <td>{{ msg.fecha|date:"d/m/Y H:i" }}</td>
+    <td>
+        <a href="{% url 'mensajes:detalle' msg.pk %}" class="btn btn-sm btn-info">
+            Ver
+        </a>
+    </td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+{% else %}
+<div class="alert alert-info">No tienes mensajes.</div>
+{% endif %}
+
+{% endblock %}

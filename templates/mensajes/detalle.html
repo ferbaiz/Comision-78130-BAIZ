@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Mensaje{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm">
+
+  <div class="card-header">
+    <strong>{{ mensaje.asunto }}</strong>
+    <span class="text-muted float-end">{{ mensaje.fecha|date:"d/m/Y H:i" }}</span>
+  </div>
+
+  <div class="card-body">
+    <p><strong>De:</strong> {{ mensaje.emisor.username }}</p>
+    <hr>
+    <p>{{ mensaje.contenido|linebreaks }}</p>
+  </div>
+
+</div>
+
+<a href="{% url 'mensajes:bandeja' %}" class="btn btn-secondary mt-3">Volver</a>
+
+{% endblock %}

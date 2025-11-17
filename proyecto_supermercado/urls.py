@@ -6,15 +6,18 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     # Admin
-    path('admin/', admin.site.urls),
+    path("admin/", admin.site.urls),
 
-    # App principal: Supermercado
+    # App principal
     path("", include("supermercado.urls")),
+
+    # Sistema de mensajes internos
+    path("mensajes/", include("mensajes.urls")),
 
     # App de usuarios
     path("accounts/", include("accounts.urls")),
 
-    # Autenticación desde Django (override con nuestros templates)
+    # Login / Logout con plantillas personalizadas
     path(
         "accounts/login/",
         auth_views.LoginView.as_view(template_name="accounts/login.html"),
@@ -27,6 +30,6 @@ urlpatterns = [
     ),
 ]
 
-# Archivos media (imágenes) disponibles en modo desarrollo
+# Archivos media (solo en debug)
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
