@@ -113,7 +113,7 @@ Sistema completo de templates con:
 
 ---
 
-## 🔧 Requisitos Técnicos — **Cumplidos ✔**
+## 🔧 Requisitos Técnicos — 
 
 ### Django / Backend
 - Proyecto Django 100% funcional
