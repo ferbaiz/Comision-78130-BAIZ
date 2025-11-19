@@ -4,55 +4,38 @@
 {% block title %}{{ producto.nombre }}{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-md-5">
+<div class="container py-4">
 
-        <div class="card shadow-sm mb-3">
+    <a href="{% url 'supermercado:productos' %}" class="btn btn-link mb-3">⬅ Volver</a>
+
+    <div class="row">
+        <div class="col-md-5">
             {% if producto.imagen %}
-            <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}">
+            <img src="{{ producto.imagen.url }}" class="img-fluid rounded shadow-sm">
             {% else %}
-            <img src="{% static 'img/no-image.jpg' %}" class="card-img-top" alt="Sin imagen">
+            <img src="{% static 'img/no-image.png' %}" class="img-fluid rounded shadow-sm">
             {% endif %}
         </div>
 
-    </div>
+        <div class="col-md-7">
+            <h2 class="fw-bold">{{ producto.nombre }}</h2>
 
-    <div class="col-md-7">
-        <h2>{{ producto.nombre }}</h2>
+            <p class="text-muted">{{ producto.descripcion }}</p>
 
-        {% if producto.categoria %}
-        <p>
-            <span class="badge text-bg-secondary">
-                {{ producto.categoria.get_nombre_display }}
-            </span>
-        </p>
-        {% endif %}
+            <p><strong>Categoría:</strong> {{ producto.categoria }}</p>
 
-        <p class="text-muted">
-            Proveedor:
-            {% if producto.proveedor %}
-                {{ producto.proveedor.nombre }}
-            {% else %}
-                <em>Sin proveedor asignado</em>
+            <p><strong>Código:</strong> {{ producto.codigo }}</p>
+
+            <p><strong>Precio:</strong> $ {{ producto.precio }}</p>
+
+            <p><strong>Stock:</strong> {{ producto.stock }}</p>
+
+            {% if user.is_authenticated %}
+            <a href="{% url 'supermercado:producto_update' producto.pk %}" class="btn btn-warning">Editar</a>
+            <a href="{% url 'supermercado:producto_delete' producto.pk %}" class="btn btn-danger">Eliminar</a>
             {% endif %}
-        </p>
-
-        <p>{{ producto.descripcion|linebreaks }}</p>
-
-        <h4 class="text-success">Precio: ${{ producto.precio }}</h4>
-        <p>Stock disponible: <strong>{{ producto.stock }}</strong></p>
-
-        <div class="mt-3 d-flex gap-2">
-            <a href="{% url 'supermercado:producto_update' producto.pk %}" class="btn btn-warning">
-                <i class="bi bi-pencil"></i> Editar
-            </a>
-            <a href="{% url 'supermercado:producto_delete' producto.pk %}" class="btn btn-danger">
-                <i class="bi bi-trash"></i> Eliminar
-            </a>
-            <a href="{% url 'supermercado:productos' %}" class="btn btn-secondary">
-                Volver al listado
-            </a>
         </div>
     </div>
+
 </div>
 {% endblock %}

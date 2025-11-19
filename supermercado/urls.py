@@ -11,6 +11,7 @@ urlpatterns = [
     path("", views.HomeView.as_view(), name="home"),
     path("about/", views.AboutView.as_view(), name="about"),
 
+
     # ======================
     # BLOG / PÁGINAS
     # ======================
@@ -20,8 +21,9 @@ urlpatterns = [
     path("pages/<int:pk>/editar/", views.PageUpdateView.as_view(), name="page_update"),
     path("pages/<int:pk>/eliminar/", views.PageDeleteView.as_view(), name="page_delete"),
 
+
     # ======================
-    # PRODUCTOS (CRUD Completo)
+    # PRODUCTOS (CRUD)
     # ======================
     path("productos/", views.ProductoListView.as_view(), name="productos"),
     path("productos/nuevo/", views.ProductoCreateView.as_view(), name="producto_create"),
@@ -39,6 +41,7 @@ urlpatterns = [
     path("proveedores/<int:pk>/editar/", views.proveedor_update, name="proveedor_update"),
     path("proveedores/<int:pk>/eliminar/", views.proveedor_delete, name="proveedor_delete"),
 
+
     # ======================
     # CLIENTES (CRUD)
     # ======================
@@ -47,6 +50,16 @@ urlpatterns = [
     path("clientes/<int:pk>/", views.cliente_detail, name="cliente_detail"),
     path("clientes/<int:pk>/editar/", views.cliente_update, name="cliente_update"),
     path("clientes/<int:pk>/eliminar/", views.cliente_delete, name="cliente_delete"),
+
+
+    # ======================
+    # CATEGORÍAS (CRUD)
+    # ======================
+    path("categorias/", views.CategoriaListView.as_view(), name="categorias_list"),
+    path("categorias/nueva/", views.CategoriaCreateView.as_view(), name="categoria_create"),
+    path("categorias/<int:pk>/editar/", views.CategoriaUpdateView.as_view(), name="categoria_update"),
+    path("categorias/<int:pk>/eliminar/", views.CategoriaDeleteView.as_view(), name="categoria_delete"),
+
 
     # ======================
     # RUTA PROTEGIDA EJEMPLO

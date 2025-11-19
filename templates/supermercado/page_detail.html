@@ -1,23 +1,66 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}{{ page.titulo }}{% endblock %}
 
 {% block content %}
-<h1>{{ page.titulo }}</h1>
+<div class="container mt-4">
+    <div class="col-md-10 offset-md-1">
 
-{% if page.imagen %}
-<img src="{{ page.imagen.url }}" width="400">
-{% endif %}
+        <div class="card shadow-sm p-4">
 
-<div>
-    {{ page.contenido|safe }}
+            <!-- TÍTULO -->
+            <h2 class="text-center mb-2">{{ page.titulo }}</h2>
+
+            {% if page.subtitulo %}
+            <h5 class="text-center text-muted mb-4">{{ page.subtitulo }}</h5>
+            {% endif %}
+
+            <!-- IMAGEN -->
+            {% if page.imagen %}
+            <div class="text-center mb-4">
+                <img src="{{ page.imagen.url }}" class="img-fluid rounded" alt="Imagen de página">
+            </div>
+            {% endif %}
+
+            <!-- CONTENIDO -->
+            <div class="mt-3">
+                {{ page.contenido|safe }}
+            </div>
+
+            <hr>
+
+            <!-- METADATA -->
+            <p class="text-muted">
+                <strong>Publicado:</strong> {{ page.publicado|date:"d/m/Y H:i" }} <br>
+                {% if page.autor %}
+                    <strong>Autor:</strong> {{ page.autor.username }}
+                {% endif %}
+            </p>
+
+            <hr>
+
+            <!-- BOTONES -->
+            <div class="d-flex justify-content-between mt-3">
+
+                <a href="{% url 'supermercado:pages' %}" class="btn btn-secondary">
+                    Volver al listado
+                </a>
+
+                {% if user.is_authenticated %}
+                <div>
+                    <a href="{% url 'supermercado:page_update' page.id %}" class="btn btn-primary me-2">
+                        Editar
+                    </a>
+                    <a href="{% url 'supermercado:page_delete' page.id %}" class="btn btn-danger">
+                        Eliminar
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+
+        </div>
+
+    </div>
 </div>
-
-<p><strong>Fecha:</strong> {{ page.publicado }}</p>
-
-{% if user.is_authenticated %}
-    <a href="{% url 'supermercado:page_update' page.id %}">Editar</a> |
-    <a href="{% url 'supermercado:page_delete' page.id %}">Eliminar</a>
-{% endif %}
-
 {% endblock %}

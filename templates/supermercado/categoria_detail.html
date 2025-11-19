@@ -1,32 +1,21 @@
 {% extends "base.html" %}
-{% block title %}{{ categoria.nombre }}{% endblock %}
 
 {% block content %}
-<div class="card shadow-sm">
-  <div class="card-body">
-    <h2 class="fw-bold">{{ categoria.nombre }}</h2>
+<div class="container mt-4">
+    <h2>Categoría: {{ categoria.nombre }}</h2>
 
-    {% if categoria.descripcion %}
-      <p class="mt-2">{{ categoria.descripcion }}</p>
-    {% endif %}
+    <p><strong>ID:</strong> {{ categoria.id }}</p>
 
-    <hr>
+    <a href="{% url 'supermercado:categoria_update' categoria.id %}" class="btn btn-warning">
+        Editar
+    </a>
 
-    <div class="d-flex gap-2">
-      <a href="{% url 'supermercado:categorias' %}" class="btn btn-secondary">
+    <a href="{% url 'supermercado:categoria_delete' categoria.id %}" class="btn btn-danger">
+        Eliminar
+    </a>
+
+    <a href="{% url 'supermercado:categorias_list' %}" class="btn btn-secondary">
         Volver
-      </a>
-
-      {% if user.is_authenticated %}
-      <a href="{% url 'supermercado:categoria_update' categoria.pk %}" class="btn btn-primary">
-        <i class="bi bi-pencil"></i> Editar
-      </a>
-
-      <a href="{% url 'supermercado:categoria_delete' categoria.pk %}" class="btn btn-danger">
-        <i class="bi bi-trash"></i> Eliminar
-      </a>
-      {% endif %}
-    </div>
-  </div>
+    </a>
 </div>
 {% endblock %}

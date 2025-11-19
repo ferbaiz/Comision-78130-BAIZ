@@ -41,7 +41,7 @@ class Proveedor(models.Model):
 class Cliente(models.Model):
     nombre = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
-    telefono = models.CharField(max_length=15, blank=True, null=True)  # <- Notar null=True por si migraste sin este campo
+    telefono = models.CharField(max_length=15, blank=True, null=True)
     saldo = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     registrado = models.DateField(auto_now_add=True)
 
@@ -50,9 +50,10 @@ class Cliente(models.Model):
 
 
 # ======================
-# PRODUCTO
+# PRODUCTO  (MODELO PRINCIPAL DE LA CONSIGNA)
 # ======================
 class Producto(models.Model):
+    codigo = models.PositiveIntegerField(unique=True)
     categoria = models.ForeignKey(
         Categoria,
         on_delete=models.SET_NULL,
@@ -73,7 +74,9 @@ class Producto(models.Model):
     creado = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.nombre
+        return f"{self.codigo} - {self.nombre}"
+
+
 
 
 # ======================

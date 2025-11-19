@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Mensajes recibidos</h2>
+
+<a href="{% url 'mensajes_nuevo' %}" class="btn btn-primary mb-3">Nuevo mensaje</a>
+
+{% for m in object_list %}
+<div class="card mb-3">
+    <div class="card-body">
+        <h5>{{ m.titulo }}</h5>
+        <p>{{ m.contenido }}</p>
+        <small>De: {{ m.autor.username }} — {{ m.fecha|date:"d/m/Y H:i" }}</small>
+        <br>
+        <a href="{% url 'mensajes_eliminar' m.id %}" class="btn btn-danger btn-sm mt-2">Eliminar</a>
+    </div>
+</div>
+{% empty %}
+<p>No tenés mensajes.</p>
+{% endfor %}
+{% endblock %}

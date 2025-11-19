@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.html import format_html
 from .models import Categoria, Producto, Proveedor, Cliente, Page
 
 
@@ -19,7 +20,7 @@ class CategoriaAdmin(admin.ModelAdmin):
 class ProveedorAdmin(admin.ModelAdmin):
     list_display = ('nombre', 'contacto', 'telefono', 'email')
     search_fields = ('nombre', 'email')
-    list_filter = ('nombre',)
+    list_filter = ('nombre', 'email')
 
 
 # ======================
@@ -29,7 +30,7 @@ class ProveedorAdmin(admin.ModelAdmin):
 class ClienteAdmin(admin.ModelAdmin):
     list_display = ('nombre', 'email', 'telefono', 'saldo')
     search_fields = ('nombre', 'email')
-    list_filter = ('saldo',)
+    list_filter = ('saldo', 'email')
 
 
 # ======================
@@ -37,17 +38,16 @@ class ClienteAdmin(admin.ModelAdmin):
 # ======================
 @admin.register(Producto)
 class ProductoAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'categoria', 'proveedor', 'precio', 'stock', 'creado')
+    list_display = ('nombre', 'categoria', 'proveedor', 'precio', 'stock', 'creado', 'imagen_tag')
     list_filter = ('categoria', 'proveedor', 'creado')
     search_fields = ('nombre', 'descripcion')
     readonly_fields = ('creado',)
 
-    # Mostrar imagen chiquita en el admin
+    # Mostrar imagen pequeña
     def imagen_tag(self, obj):
         if obj.imagen:
-            return format_html('<img src="{}" width="50" height="50" />'.format(obj.imagen.url))
+            return format_html('<img src="{}" width="50" height="50" style="border-radius:4px;" />', obj.imagen.url)
         return "-"
-
     imagen_tag.short_description = "Imagen"
 
 

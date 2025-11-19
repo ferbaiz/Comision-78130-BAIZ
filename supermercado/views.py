@@ -7,8 +7,8 @@ from django.views.generic import (
     CreateView, UpdateView, DeleteView
 )
 
-from .models import Page, Producto, Categoria, Proveedor, Cliente
-from .forms import PageForm, ProductoForm, ProveedorForm, ClienteForm
+from .models import Page, Producto, Proveedor, Cliente, Categoria
+from .forms import PageForm, ProductoForm, ProveedorForm, ClienteForm, CategoriaForm
 
 
 # ===========================
@@ -25,6 +25,7 @@ class AboutView(TemplateView):
 
 # ===========================
 # BLOG / PÁGINAS
+# (Lista/detalle públicas — CRUD privado)
 # ===========================
 
 class PageListView(ListView):
@@ -34,8 +35,8 @@ class PageListView(ListView):
     paginate_by = 6
 
     def get_queryset(self):
-        q = self.request.GET.get('q')
-        qs = super().get_queryset().order_by('-publicado')
+        q = self.request.GET.get("q")
+        qs = Page.objects.all().order_by("-publicado")
         if q:
             qs = qs.filter(titulo__icontains=q)
         return qs
@@ -51,7 +52,7 @@ class PageCreateView(LoginRequiredMixin, CreateView):
     model = Page
     form_class = PageForm
     template_name = "supermercado/page_form.html"
-    success_url = reverse_lazy('supermercado:pages')
+    success_url = reverse_lazy("supermercado:pages")
 
     def form_valid(self, form):
         form.instance.autor = self.request.user
@@ -62,38 +63,24 @@ class PageUpdateView(LoginRequiredMixin, UpdateView):
     model = Page
     form_class = PageForm
     template_name = "supermercado/page_form.html"
-    success_url = reverse_lazy('supermercado:pages')
+    success_url = reverse_lazy("supermercado:pages")
 
 
 class PageDeleteView(LoginRequiredMixin, DeleteView):
     model = Page
     template_name = "supermercado/page_confirm_delete.html"
-    success_url = reverse_lazy('supermercado:pages')
+    success_url = reverse_lazy("supermercado:pages")
 
 
 # ===========================
-# PRODUCTOS (CRUD COMPLETO)
+# PRODUCTOS
+# (Lista/detalle públicas — CRUD privado)
 # ===========================
-
-from django.urls import reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-
-from .models import Producto
-from .forms import ProductoForm
-
 
 class ProductoListView(ListView):
     model = Producto
     template_name = "supermercado/productos_list.html"
     context_object_name = "productos"
-
-    def get_queryset(self):
-        categoria = self.request.GET.get('categoria')
-        qs = super().get_queryset().select_related("categoria", "proveedor")
-        if categoria:
-            qs = qs.filter(categoria__nombre__iexact=categoria)
-        return qs
 
 
 class ProductoDetailView(DetailView):
@@ -123,23 +110,22 @@ class ProductoDeleteView(LoginRequiredMixin, DeleteView):
 
 
 # ===========================
-# PROVEEDORES (CRUD SIMPLE)
+# PROVEEDORES (CRUD PRIVADO)
 # ===========================
 
+@login_required
 def proveedores_list(request):
     proveedores = Proveedor.objects.all()
-    return render(request, "supermercado/proveedores_list.html", {
-        "proveedores": proveedores
-    })
+    return render(request, "supermercado/proveedores_list.html", {"proveedores": proveedores})
 
 
+@login_required
 def proveedor_detail(request, pk):
     proveedor = get_object_or_404(Proveedor, pk=pk)
-    return render(request, "supermercado/proveedor_detail.html", {
-        "proveedor": proveedor
-    })
+    return render(request, "supermercado/proveedor_detail.html", {"proveedor": proveedor})
 
 
+@login_required
 def proveedor_create(request):
     if request.method == "POST":
         form = ProveedorForm(request.POST)
@@ -149,11 +135,10 @@ def proveedor_create(request):
     else:
         form = ProveedorForm()
 
-    return render(request, "supermercado/proveedor_form.html", {
-        "form": form
-    })
+    return render(request, "supermercado/proveedor_form.html", {"form": form})
 
 
+@login_required
 def proveedor_update(request, pk):
     proveedor = get_object_or_404(Proveedor, pk=pk)
 
@@ -165,12 +150,10 @@ def proveedor_update(request, pk):
     else:
         form = ProveedorForm(instance=proveedor)
 
-    return render(request, "supermercado/proveedor_form.html", {
-        "form": form,
-        "proveedor": proveedor
-    })
+    return render(request, "supermercado/proveedor_form.html", {"form": form, "proveedor": proveedor})
 
 
+@login_required
 def proveedor_delete(request, pk):
     proveedor = get_object_or_404(Proveedor, pk=pk)
 
@@ -178,29 +161,26 @@ def proveedor_delete(request, pk):
         proveedor.delete()
         return redirect("supermercado:proveedores_list")
 
-    return render(request, "supermercado/proveedor_confirm_delete.html", {
-        "proveedor": proveedor
-    })
+    return render(request, "supermercado/proveedor_confirm_delete.html", {"proveedor": proveedor})
 
 
 # ===========================
-# CLIENTES (CRUD)
+# CLIENTES (CRUD PRIVADO)
 # ===========================
 
+@login_required
 def clientes_list(request):
     clientes = Cliente.objects.all()
-    return render(request, "supermercado/clientes_list.html", {
-        "clientes": clientes
-    })
+    return render(request, "supermercado/clientes_list.html", {"clientes": clientes})
 
 
+@login_required
 def cliente_detail(request, pk):
     cliente = get_object_or_404(Cliente, pk=pk)
-    return render(request, "supermercado/cliente_detail.html", {
-        "cliente": cliente
-    })
+    return render(request, "supermercado/cliente_detail.html", {"cliente": cliente})
 
 
+@login_required
 def cliente_create(request):
     if request.method == "POST":
         form = ClienteForm(request.POST)
@@ -210,11 +190,10 @@ def cliente_create(request):
     else:
         form = ClienteForm()
 
-    return render(request, "supermercado/cliente_form.html", {
-        "form": form
-    })
+    return render(request, "supermercado/cliente_form.html", {"form": form})
 
 
+@login_required
 def cliente_update(request, pk):
     cliente = get_object_or_404(Cliente, pk=pk)
 
@@ -226,12 +205,10 @@ def cliente_update(request, pk):
     else:
         form = ClienteForm(instance=cliente)
 
-    return render(request, "supermercado/cliente_form.html", {
-        "form": form,
-        "cliente": cliente
-    })
+    return render(request, "supermercado/cliente_form.html", {"form": form, "cliente": cliente})
 
 
+@login_required
 def cliente_delete(request, pk):
     cliente = get_object_or_404(Cliente, pk=pk)
 
@@ -239,16 +216,43 @@ def cliente_delete(request, pk):
         cliente.delete()
         return redirect("supermercado:clientes_list")
 
-    return render(request, "supermercado/cliente_confirm_delete.html", {
-        "cliente": cliente
-    })
+    return render(request, "supermercado/cliente_confirm_delete.html", {"cliente": cliente})
 
 
 # ===========================
-# RUTA PROTEGIDA
+# CATEGORÍAS (CRUD PRIVADO)
+# ===========================
+
+class CategoriaListView(LoginRequiredMixin, ListView):
+    model = Categoria
+    template_name = "supermercado/categorias_list.html"
+    context_object_name = "categorias"
+
+
+class CategoriaCreateView(LoginRequiredMixin, CreateView):
+    model = Categoria
+    form_class = CategoriaForm
+    template_name = "supermercado/categoria_form.html"
+    success_url = reverse_lazy("supermercado:categorias_list")
+
+
+class CategoriaUpdateView(LoginRequiredMixin, UpdateView):
+    model = Categoria
+    form_class = CategoriaForm
+    template_name = "supermercado/categoria_form.html"
+    success_url = reverse_lazy("supermercado:categorias_list")
+
+
+class CategoriaDeleteView(LoginRequiredMixin, DeleteView):
+    model = Categoria
+    template_name = "supermercado/categoria_confirm_delete.html"
+    success_url = reverse_lazy("supermercado:categorias_list")
+
+
+# ===========================
+# RUTA PROTEGIDA DEMO
 # ===========================
 
 @login_required
 def protected_example(request):
-    from django.http import HttpResponse
-    return HttpResponse("Ruta protegida. Solo usuarios logueados.")
+    return render(request, "supermercado/protected.html")

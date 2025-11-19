@@ -4,67 +4,50 @@
 {% block title %}Productos{% endblock %}
 
 {% block content %}
+<div class="container py-4">
 
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h2>Productos disponibles</h2>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="fw-bold">Productos disponibles</h2>
 
-    <a href="{% url 'supermercado:producto_create' %}" class="btn btn-primary">
-        <i class="bi bi-plus-circle"></i> Nuevo producto
-    </a>
-</div>
+        {% if user.is_authenticated %}
+        <a href="{% url 'supermercado:producto_create' %}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Nuevo producto
+        </a>
+        {% endif %}
+    </div>
 
-{% if productos %}
-<div class="row row-cols-1 row-cols-md-3 g-4">
-    {% for producto in productos %}
-    <div class="col">
-        <div class="card h-100 shadow-sm">
+    {% if productos %}
+    <div class="row g-4">
+        {% for p in productos %}
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
 
-            {% if producto.imagen %}
-            <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}">
-            {% else %}
-            <img src="{% static 'img/no-image.jpg' %}" class="card-img-top" alt="Sin imagen">
-            {% endif %}
-
-            <div class="card-body">
-                <h5 class="card-title">{{ producto.nombre }}</h5>
-
-                {% if producto.categoria %}
-                    <span class="badge text-bg-secondary mb-2">
-                        {{ producto.categoria.get_nombre_display }}
-                    </span>
+                {% if p.imagen %}
+                <img src="{{ p.imagen.url }}" class="card-img-top" style="height: 250px; object-fit: contain;">
+                {% else %}
+                <img src="{% static 'img/no-image.png' %}" class="card-img-top" style="height: 250px; object-fit: contain;">
                 {% endif %}
 
-                <p class="card-text">
-                    {{ producto.descripcion|default:"Sin descripción."|truncatewords:15 }}
-                </p>
+                <div class="card-body">
+                    <h5 class="card-title text-capitalize">{{ p.nombre }}</h5>
 
-                <p class="mb-0">
-                    <strong>${{ producto.precio }}</strong>
-                </p>
+                    <span class="badge bg-secondary mb-2">
+                        {{ p.categoria }}
+                    </span>
+
+                    <p class="text-muted small mb-2">{{ p.descripcion|truncatewords:15 }}</p>
+
+                    <a href="{% url 'supermercado:producto_detail' p.pk %}" class="btn btn-sm btn-outline-primary">
+                        Ver más
+                    </a>
+                </div>
             </div>
-
-            <div class="card-footer d-flex gap-2">
-                <a href="{% url 'supermercado:producto_detail' producto.pk %}"
-                   class="btn btn-sm btn-outline-primary w-100">
-                    Ver detalles
-                </a>
-                <a href="{% url 'supermercado:producto_update' producto.pk %}"
-                   class="btn btn-sm btn-warning">
-                    <i class="bi bi-pencil"></i>
-                </a>
-                <a href="{% url 'supermercado:producto_delete' producto.pk %}"
-                   class="btn btn-sm btn-danger">
-                    <i class="bi bi-trash"></i>
-                </a>
-            </div>
-
         </div>
+        {% endfor %}
     </div>
-    {% endfor %}
+
+    {% else %}
+    <p class="text-muted">No hay productos cargados todavía.</p>
+    {% endif %}
 </div>
-
-{% else %}
-<div class="alert alert-warning">No hay productos cargados.</div>
-{% endif %}
-
 {% endblock %}

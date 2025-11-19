@@ -1,22 +1,29 @@
 {% extends "base.html" %}
-{% block title %}Mensaje{% endblock %}
 
 {% block content %}
-<div class="card shadow-sm">
+<div class="container mt-4">
 
-  <div class="card-header">
-    <strong>{{ mensaje.asunto }}</strong>
-    <span class="text-muted float-end">{{ mensaje.fecha|date:"d/m/Y H:i" }}</span>
-  </div>
+    <h2>{{ mensaje.asunto }}</h2>
 
-  <div class="card-body">
-    <p><strong>De:</strong> {{ mensaje.emisor.username }}</p>
-    <hr>
-    <p>{{ mensaje.contenido|linebreaks }}</p>
-  </div>
+    <div class="card mt-3">
+        <div class="card-body">
+            <p><strong>De:</strong> {{ mensaje.remitente.username }}</p>
+            <p><strong>Para:</strong> {{ mensaje.destinatario.username }}</p>
+            <p><strong>Fecha:</strong> {{ mensaje.fecha|date:"d/m/Y H:i" }}</p>
 
+            <hr>
+            <p>{{ mensaje.contenido }}</p>
+
+            <a href="{% url 'mensajeria:bandeja' %}" class="btn btn-secondary mt-3">
+                Volver
+            </a>
+
+            <a href="{% url 'mensajeria:nuevo' %}?para={{ mensaje.remitente.username }}" 
+               class="btn btn-primary mt-3">
+                Responder
+            </a>
+
+        </div>
+    </div>
 </div>
-
-<a href="{% url 'mensajes:bandeja' %}" class="btn btn-secondary mt-3">Volver</a>
-
 {% endblock %}

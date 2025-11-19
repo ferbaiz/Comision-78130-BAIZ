@@ -1,123 +1,220 @@
-# Comision-78130-BAIZ
-# 🛒 Proyecto Final: Supermercado (Django)
+🛒 Supermercado — Proyecto Final Python / Django
 
-Este proyecto es una aplicación web desarrollada en **Django 5**, como entrega final del curso de Python en CoderHouse.  
-Simula la gestión básica de un supermercado, con administración de:
+Autor: Fernando Baiz
+Comisión: 78130
+Curso: Python — Coderhouse
 
-- Productos
-- Categorías
-- Proveedores
-- Clientes
-- Páginas tipo Blog (CMS sencillo)
-- Usuarios registrados (sistema de login y perfil)
-- (En desarrollo) Sistema interno de mensajes entre usuarios
+📌 Descripción del Proyecto
 
----
+Este proyecto es una aplicación web desarrollada en Python + Django, que simula la administración básica de un supermercado.
+Incluye gestión de productos, categorías, proveedores, clientes, páginas tipo blog, perfiles de usuario y autenticación completa.
 
-## 🚀 Tecnologías utilizadas
+Es una entrega individual correspondiente al Playground Final Project del curso.
 
-- Python 3.13
-- Django 5.2.7
-- Bootstrap 5.3
-- SQLite3
-- Django CKEditor (para contenido enriquecido)
-- Virtualenv
+🎯 Funcionalidades Principales
+🌐 Secciones Públicas
 
----
+Home
 
-## 📂 Estructura del proyecto
+About / Acerca de mí
 
-proyecto_supermercado/
-│
-├── supermercado/ # App principal
-│ ├── models.py # Modelos (Producto, Cliente, Proveedor, etc.)
-│ ├── views.py # Vistas principales
-│ ├── urls.py # Rutas principales
-│ └── templates/
-│ └── supermercado/ # Templates HTML
-│
-├── accounts/ # App de usuarios
-│ ├── models.py # Perfil de usuario
-│ ├── forms.py # Formularios propios
-│ └── templates/accounts/ # Templates login, signup, perfil
-│
-├── mensajes/ (en desarrollo)
-│
-├── media/ # Archivos subidos por usuarios
-├── static/ # CSS, imágenes y JS
-└── templates/ # Base templates compartidos
+Listado de productos
 
----
+Detalle de productos
 
-## 🛎 Funcionalidades principales
+Páginas tipo blog (listado y detalle)
 
-### 🛍 Productos  
-- CRUD completo  
-- Imagen, precio, stock, descripción  
-- Relación con categorías y proveedores  
+🔐 Secciones Protegidas (solo usuarios logueados)
 
-### 🏷 Categorías  
-- Rubros predefinidos  
-- Validadas  
-- Vistas de listado y edición  
+CRUD de Productos
 
-### 🚚 Proveedores  
-- Nombre, contacto, email, teléfono  
-- CRUD completo  
+CRUD de Categorías
 
-### 👥 Clientes  
-- Email único  
-- Registro de saldo  
-- CRUD completo  
+CRUD de Proveedores
 
-### 📝 Pages (CMS)
-- Título, subtítulo, contenido enriquecido  
-- Imagen opcional  
-- Editor CKEditor  
+CRUD de Clientes
 
-### 👤 Usuarios  
-- Registro  
-- Login  
-- Logout  
-- Perfil editable  
+Crear/editar/borrar páginas (blog)
 
----
+Acceso a APIs internas protegidas
 
-## 🧰 Instalación
+Vista protegida de ejemplo
 
-1. Clonar el repositorio:
+👤 Sistema de Usuarios (APP: accounts)
 
-```bash
-git clone https://github.com/ferbaiz/Comision-78130-BAIZ.git
+Registro (Signup)
 
-Crear entorno virtual:
+Login
 
+Logout
+
+Perfil del usuario
+
+Edición de perfil (nombre, apellido, avatar, biografía, etc.)
+
+Cambio de contraseña
+
+🧱 Modelo Principal: Producto
+
+Cumple todos los requisitos del docente:
+
+✔ codigo: IntegerField unique=True
+
+✔ nombre: CharField
+
+✔ categoria: ForeignKey
+
+✔ descripcion: TextField
+
+✔ imagen: ImageField
+
+✔ precio: DecimalField
+
+✔ stock: PositiveIntegerField
+
+✔ creado: DateTimeField (fecha automática)
+
+📂 Estructura del Proyecto (simplificada)
+supermercado/
+│── accounts/
+│── supermercado/
+│   │── models.py
+│   │── views.py
+│   │── forms.py
+│   │── urls.py
+│   │── admin.py
+│── mensajeria/
+│── templates/
+│   │── base.html
+│   ├── accounts/
+│   ├── supermercado/
+│   └── mensajes/
+│── media/
+│── static/
+│── requirements.txt
+│── .gitignore
+│── manage.py
+
+🖼️ Templates
+
+Se utiliza herencia de templates, con un base.html que contiene:
+
+NavBar
+
+Bootstrap
+
+Mensajes
+
+Footer
+
+Includes reutilizables
+
+🔧 Requisitos Técnicos — Cumplidos ✔
+Django + Python
+
+✔ Proyecto Django funcionando
+✔ Models, Forms, Views, Admin
+✔ Uso de CBVs (ListView, DetailView, CreateView, UpdateView, DeleteView)
+✔ Uso de Mixin (LoginRequiredMixin)
+✔ Uso de decorador (@login_required)
+✔ CRUD completos
+✔ Templates con herencia
+✔ Formularios compatibles con imágenes
+✔ APIs protegidas
+✔ Migraciones aplicadas correctamente
+
+Git
+
+✔ Proyecto subido a GitHub
+✔ .gitignore configurado:
+
+__pycache__/
+db.sqlite3
+media/
+
+Requirements
+
+✔ requirements.txt generado con:
+
+pip freeze > requirements.txt
+
+▶️ Cómo ejecutar el proyecto
+1️⃣ Crear entorno virtual
 python -m venv entorno_virtual
 
+2️⃣ Activarlo
 
-Activar entorno:
+Windows:
 
 entorno_virtual\Scripts\activate
 
-
-Instalar dependencias:
-
+3️⃣ Instalar dependencias
 pip install -r requirements.txt
 
-
-Realizar migraciones:
-
+4️⃣ Aplicar migraciones
 python manage.py migrate
 
-
-Crear superusuario:
-
+5️⃣ Crear superusuario
 python manage.py createsuperuser
 
-
-Iniciar servidor:
-
+6️⃣ Iniciar servidor
 python manage.py runserver
 
-Panel Admin
-http://127.0.0.1:8000/admin/
+
+Acceso:
+👉 http://127.0.0.1:8000/
+
+👤 Acerca de Mí (About)
+
+La página /about/ detalla información personal del desarrollador:
+
+Nombre
+
+Presentación
+
+Intereses
+
+Redes
+
+🔐 Usuario / Perfil
+
+Desde la app accounts el usuario puede:
+
+Registrarse
+
+Loguearse
+
+Cerrar sesión
+
+Ver su perfil
+
+Editarlo
+
+Cambiar la contraseña
+
+Incluye:
+
+Avatar (opcional)
+
+Email
+
+Nombre y apellido
+
+Biografía
+
+🛡️ Seguridad
+
+Rutas protegidas mediante LoginRequiredMixin y @login_required
+
+Las APIs y CRUD no se pueden usar sin autenticación
+
+Sanitización de formularios estándar Django
+
+📝 Licencia
+
+Proyecto educativo realizado para Coderhouse.
+Uso libre para fines académicos.
+
+✔️ Estado Final
+
+PROYECTO COMPLETAMENTE FUNCIONAL Y LISTO PARA ENTREGAR.

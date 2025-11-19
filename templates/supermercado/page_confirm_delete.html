@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Eliminar Página{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="col-md-6 offset-md-3">
+        <div class="card shadow-sm p-4">
+
+            <h3 class="text-center text-danger mb-3">Eliminar Página</h3>
+
+            <p class="text-center">
+                ¿Estás seguro de que querés eliminar la siguiente página?
+            </p>
+
+            <ul class="list-group mb-4">
+                <li class="list-group-item">
+                    <strong>Título:</strong> {{ page.titulo }}
+                </li>
+                {% if page.subtitulo %}
+                <li class="list-group-item">
+                    <strong>Subtítulo:</strong> {{ page.subtitulo }}
+                </li>
+                {% endif %}
+                <li class="list-group-item">
+                    <strong>Fecha de publicación:</strong> 
+                    {{ page.publicado|date:"d/m/Y H:i" }}
+                </li>
+            </ul>
+
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="d-flex justify-content-between">
+                    <a href="{% url 'supermercado:pages' %}" class="btn btn-secondary">
+                        Cancelar
+                    </a>
+                    <button type="submit" class="btn btn-danger">
+                        Eliminar definitivamente
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

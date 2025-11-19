@@ -3,27 +3,22 @@
 {% block content %}
 <div class="container mt-4">
 
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2>Bandeja de Entrada</h2>
-        <a href="{% url 'mensajeria:nuevo' %}" class="btn btn-primary">
-            <i class="bi bi-plus-circle"></i> Nuevo Mensaje
-        </a>
-    </div>
+    <h2>Mensajes Enviados</h2>
 
     {% if mensajes %}
         <table class="table table-hover">
             <thead class="table-dark">
                 <tr>
-                    <th>De</th>
+                    <th>Para</th>
                     <th>Asunto</th>
                     <th>Fecha</th>
-                    <th style="width: 120px;">Acciones</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 {% for m in mensajes %}
                 <tr>
-                    <td>{{ m.remitente.username }}</td>
+                    <td>{{ m.destinatario.username }}</td>
                     <td>{{ m.asunto }}</td>
                     <td>{{ m.fecha|date:"d/m/Y H:i" }}</td>
                     <td>
@@ -36,7 +31,11 @@
             </tbody>
         </table>
     {% else %}
-        <div class="alert alert-info text-center">No tenés mensajes.</div>
+        <div class="alert alert-info text-center">No has enviado mensajes.</div>
     {% endif %}
+
+    <a class="btn btn-secondary" href="{% url 'mensajeria:bandeja' %}">
+        Volver
+    </a>
 </div>
 {% endblock %}

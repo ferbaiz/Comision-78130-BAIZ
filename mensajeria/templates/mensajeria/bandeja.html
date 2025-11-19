@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Bandeja de entrada{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-4">📥 Bandeja de entrada</h2>
+
+<a href="{% url 'mensajeria:nuevo' %}" class="btn btn-primary mb-3">
+    <i class="bi bi-plus-circle"></i> Nuevo mensaje
+</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>De</th>
+            <th>Asunto</th>
+            <th>Fecha</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+    {% for mensaje in mensajes %}
+        <tr class="{% if not mensaje.leido %}table-warning{% endif %}">
+            <td>{{ mensaje.remitente.username }}</td>
+            <td>{{ mensaje.asunto }}</td>
+            <td>{{ mensaje.fecha|date:"d/m/Y H:i" }}</td>
+            <td>
+                <a href="{% url 'mensajeria:detalle' mensaje.pk %}" class="btn btn-sm btn-info">
+                    Abrir
+                </a>
+            </td>
+        </tr>
+    {% empty %}
+        <tr>
+            <td colspan="4" class="text-center text-muted">No tenés mensajes</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

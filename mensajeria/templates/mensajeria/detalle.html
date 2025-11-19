@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Detalle del mensaje{% endblock %}
+
+{% block content %}
+
+<div class="card shadow">
+    <div class="card-header bg-primary text-white">
+        <h5 class="mb-0">📨 Detalle del mensaje</h5>
+    </div>
+
+    <div class="card-body">
+
+        <p><strong>De:</strong> {{ mensaje.remitente.username }}</p>
+        <p><strong>Para:</strong> {{ mensaje.destinatario.username }}</p>
+        <p><strong>Asunto:</strong> {{ mensaje.asunto }}</p>
+        <p><strong>Fecha:</strong> {{ mensaje.fecha|date:"d/m/Y H:i" }}</p>
+
+        <hr>
+
+        <p style="white-space: pre-line;">{{ mensaje.contenido }}</p>
+
+        <hr>
+
+        <div class="d-flex gap-2">
+            {% if mensaje.destinatario == user and not mensaje.leido %}
+                <a href="{% url 'mensajeria:marcar_leido' mensaje.pk %}" 
+                   class="btn btn-success">
+                    <i class="bi bi-check2-circle"></i> Marcar como leído
+                </a>
+            {% endif %}
+
+            <a href="{% url 'mensajeria:nuevo' %}?para={{ mensaje.remitente.username }}" 
+               class="btn btn-warning">
+                <i class="bi bi-reply"></i> Responder
+            </a>
+
+            <a href="{% url 'mensajeria:bandeja' %}" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Volver a la bandeja
+            </a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

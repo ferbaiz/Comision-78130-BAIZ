@@ -8,13 +8,13 @@ urlpatterns = [
     # Admin
     path("admin/", admin.site.urls),
 
-    # App principal
+    # App principal Supermercado
     path("", include("supermercado.urls")),
 
-    # Sistema de mensajes internos
-    path("mensajes/", include("mensajes.urls")),
+    # Sistema de Mensajería (la app correcta es MENSAJERIA)
+    path("mensajeria/", include("mensajeria.urls")),
 
-    # App de usuarios
+    # App de Usuarios
     path("accounts/", include("accounts.urls")),
 
     # Login / Logout con plantillas personalizadas
@@ -30,6 +30,6 @@ urlpatterns = [
     ),
 ]
 
-# Archivos media (solo en debug)
+# Archivos MEDIA en modo DEBUG
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

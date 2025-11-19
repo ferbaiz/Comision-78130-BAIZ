@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Eliminar mensaje</h2>
+<p>¿Seguro querés eliminar este mensaje?</p>
+<form method="POST">
+    {% csrf_token %}
+    <button class="btn btn-danger" type="submit">Eliminar</button>
+    <a class="btn btn-secondary" href="{% url 'mensajes_list' %}">Cancelar</a>
+</form>
+{% endblock %}

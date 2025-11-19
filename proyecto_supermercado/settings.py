@@ -29,7 +29,7 @@ INSTALLED_APPS = [
     # Apps propias
     'supermercado',
     'accounts',
-    'mensajes',
+    'mensajeria',
 ]
 
 
