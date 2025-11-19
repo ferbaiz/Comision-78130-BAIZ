@@ -16,9 +16,13 @@ class Categoria(models.Model):
     ]
 
     nombre = models.CharField(max_length=120, choices=RUBROS, unique=True)
-    descripcion = models.CharField(max_length=255, blank=True)
+    descripcion = models.CharField(max_length=255, blank=True, null=True)
+
+    class Meta:
+        ordering = ['nombre']
 
     def __str__(self):
+        # Devuelve siempre el label amigable
         return dict(self.RUBROS).get(self.nombre, self.nombre)
 
 
@@ -44,6 +48,9 @@ class Cliente(models.Model):
     telefono = models.CharField(max_length=15, blank=True, null=True)
     saldo = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     registrado = models.DateField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['nombre']
 
     def __str__(self):
         return self.nombre
@@ -73,10 +80,11 @@ class Producto(models.Model):
     stock = models.PositiveIntegerField(default=0)
     creado = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ['codigo']
+
     def __str__(self):
         return f"{self.codigo} - {self.nombre}"
-
-
 
 
 # ======================

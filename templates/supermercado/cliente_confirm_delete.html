@@ -1,27 +1,34 @@
 {% extends "base.html" %}
-{% load static %}
 
-{% block title %}Eliminar Cliente{% endblock %}
+{% block title %}Eliminar Categoría{% endblock %}
 
 {% block content %}
 <div class="container mt-5">
+
     <h2 class="mb-3 text-danger">
-        <i class="bi bi-exclamation-triangle"></i> Eliminar Cliente
+        <i class="bi bi-exclamation-triangle"></i> Eliminar Categoría
     </h2>
 
-    <p>¿Estás seguro de que quieres eliminar al cliente:</p>
-    <h4>{{ cliente.nombre }}</h4>
-    <p><strong>Email:</strong> {{ cliente.email }}</p>
-    <p><strong>Saldo pendiente:</strong> $ {{ cliente.saldo }}</p>
+    <p>¿Estás seguro de que querés eliminar la categoría:</p>
 
-    <form method="post">
+    <h4 class="fw-bold">{{ object }}</h4>
+
+    <p class="text-muted">
+        <i class="bi bi-info-circle"></i>
+        Esto puede afectar productos que usen esta categoría.
+    </p>
+
+    <form method="post" class="mt-3">
         {% csrf_token %}
+
         <button type="submit" class="btn btn-danger">
             <i class="bi bi-trash"></i> Sí, eliminar
         </button>
-        <a href="{% url 'supermercado:clientes_list' %}" class="btn btn-secondary">
+
+        <a href="{% url 'supermercado:categorias_list' %}" class="btn btn-secondary">
             <i class="bi bi-x-lg"></i> Cancelar
         </a>
     </form>
+
 </div>
 {% endblock %}

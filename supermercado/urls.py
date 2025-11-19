@@ -65,4 +65,5 @@ urlpatterns = [
     # RUTA PROTEGIDA EJEMPLO
     # ======================
     path("protegida/", views.protected_example, name="protected_example"),
+
 ]

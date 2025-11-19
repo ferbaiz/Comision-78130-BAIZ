@@ -57,6 +57,13 @@
                     </a>
                 </li>
 
+                <!-- NUEVO: CATEGORÍAS -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'supermercado:categorias_list' %}">
+                        <i class="bi bi-tags"></i> Categorías
+                    </a>
+                </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'supermercado:proveedores_list' %}">
                         <i class="bi bi-truck"></i> Proveedores
@@ -85,9 +92,7 @@
                 {% if user.is_authenticated %}
                 
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'accounts:profile' %}">
-                        <i class="bi bi-person-circle"></i> Mi Perfil
-                    </a>
+                    <a class="nav-link" href="{% url 'accounts:profile' %}"><i class="bi bi-person-circle"></i> Mi Perfil</a>
                 </li>
 
                 <li class="nav-item">

@@ -25,7 +25,6 @@ class AboutView(TemplateView):
 
 # ===========================
 # BLOG / PÁGINAS
-# (Lista/detalle públicas — CRUD privado)
 # ===========================
 
 class PageListView(ListView):
@@ -74,7 +73,6 @@ class PageDeleteView(LoginRequiredMixin, DeleteView):
 
 # ===========================
 # PRODUCTOS
-# (Lista/detalle públicas — CRUD privado)
 # ===========================
 
 class ProductoListView(ListView):
@@ -110,7 +108,7 @@ class ProductoDeleteView(LoginRequiredMixin, DeleteView):
 
 
 # ===========================
-# PROVEEDORES (CRUD PRIVADO)
+# PROVEEDORES (FBV)
 # ===========================
 
 @login_required
@@ -134,7 +132,6 @@ def proveedor_create(request):
             return redirect("supermercado:proveedores_list")
     else:
         form = ProveedorForm()
-
     return render(request, "supermercado/proveedor_form.html", {"form": form})
 
 
@@ -150,7 +147,11 @@ def proveedor_update(request, pk):
     else:
         form = ProveedorForm(instance=proveedor)
 
-    return render(request, "supermercado/proveedor_form.html", {"form": form, "proveedor": proveedor})
+    return render(
+        request,
+        "supermercado/proveedor_form.html",
+        {"form": form, "proveedor": proveedor}
+    )
 
 
 @login_required
@@ -161,11 +162,15 @@ def proveedor_delete(request, pk):
         proveedor.delete()
         return redirect("supermercado:proveedores_list")
 
-    return render(request, "supermercado/proveedor_confirm_delete.html", {"proveedor": proveedor})
+    return render(
+        request,
+        "supermercado/proveedor_confirm_delete.html",
+        {"proveedor": proveedor}
+    )
 
 
 # ===========================
-# CLIENTES (CRUD PRIVADO)
+# CLIENTES (FBV)
 # ===========================
 
 @login_required
@@ -205,27 +210,35 @@ def cliente_update(request, pk):
     else:
         form = ClienteForm(instance=cliente)
 
-    return render(request, "supermercado/cliente_form.html", {"form": form, "cliente": cliente})
+    return render(
+        request,
+        "supermercado/cliente_form.html",
+        {"form": form, "cliente": cliente}
+    )
 
 
 @login_required
 def cliente_delete(request, pk):
     cliente = get_object_or_404(Cliente, pk=pk)
 
-    if request.method == "POST":
+    if request.method == "POST__":
         cliente.delete()
         return redirect("supermercado:clientes_list")
 
-    return render(request, "supermercado/cliente_confirm_delete.html", {"cliente": cliente})
+    return render(
+        request,
+        "supermercado/cliente_confirm_delete.html",
+        {"cliente": cliente}
+    )
 
 
 # ===========================
-# CATEGORÍAS (CRUD PRIVADO)
+# CATEGORÍAS (CRUD – SOLO LOGIN)
 # ===========================
 
 class CategoriaListView(LoginRequiredMixin, ListView):
     model = Categoria
-    template_name = "supermercado/categorias_list.html"
+    template_name = "supermercado/categorias_list.html"  # ← CORREGIDO
     context_object_name = "categorias"
 
 

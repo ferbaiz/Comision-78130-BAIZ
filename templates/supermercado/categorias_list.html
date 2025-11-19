@@ -19,17 +19,17 @@
                     <tr>
                         <th>Nombre</th>
                         <th>Descripción</th>
-                        <th style="width: 180px;">Acciones</th>
+                        <th class="text-center" style="width: 160px;">Acciones</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     {% for categoria in categorias %}
                     <tr>
-                        <td>{{ categoria.get_nombre_display }}</td>
+                        <td>{{ categoria.nombre }}</td>
                         <td>{{ categoria.descripcion|default:"—" }}</td>
 
-                        <td>
+                        <td class="text-center">
                             <a href="{% url 'supermercado:categoria_update' categoria.pk %}" 
                                class="btn btn-sm btn-warning">
                                 <i class="bi bi-pencil"></i>
